@@ -25,6 +25,9 @@ function sourceExtension {
         . $EXTENSIONS_ROOT/.bash_profile.$1
     fi
 }
+sourceExtension "1password"
+sourceExtension "nvm"
+sourceExtension "go"
 sourceExtension "gopass"
 sourceExtension "git.completion"
 sourceExtension "git.prompt"
