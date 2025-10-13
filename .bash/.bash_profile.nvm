@@ -1,3 +1,14 @@
-# NVM
-export NVM_DIR=~/.nvm
-source $(brew --prefix nvm)/nvm.sh
+#
+#   Node Version Manager
+#
+
+#
+#   check if NVM is installed via Homebrew
+#
+if ! brew list nvm &>/dev/null; then
+    echo "NVM not found via Homebrew. Installing..."
+    brew install nvm
+fi
+
+export NVM_DIR="~/.nvm"
+source "$(brew --prefix nvm)/nvm.sh"

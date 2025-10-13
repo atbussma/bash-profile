@@ -1,28 +1,30 @@
-echo "Loading .bash_profile"
+echo "Loading profile"
 
 #
 #   configure exports
 #
 echo "Loading exports"
-export EDITOR=vim;
-export VISUAL=$EDITOR;
+export EDITOR="vim"
+export VISUAL="$EDITOR"
 
 #
 #   configure aliases
 #
 if [ -f ~/.aliases ]; then
     echo "Loading aliases"
-    source ~/.aliases
+    source "$HOME/.aliases"
 fi
 
 #
 #   source extensions
 #
-EXTENSIONS_ROOT=~/.bash
-function sourceExtension {
-    if [ -f $EXTENSIONS_ROOT/.bash_profile.$1 ]; then
-        echo "Loading $EXTENSIONS_ROOT/.bash_profile.$1"
-        . $EXTENSIONS_ROOT/.bash_profile.$1
+
+EXTENSIONS_ROOT="$HOME/.bash"
+sourceExtension() {
+    local extension_file="$EXTENSIONS_ROOT/.bash_profile.$1"
+    if [ -f "$extension_file" ]; then
+        echo "Loading $extension_file"
+        . "$extension_file"
     fi
 }
 sourceExtension "1password"
