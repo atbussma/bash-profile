@@ -1,0 +1,4 @@
+# Docker
+
+export DOCKERPATH="/Applications/Docker.app/Contents/Resources/bin"
+export PATH=$PATH:${DOCKERPATH}
