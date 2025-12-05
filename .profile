@@ -20,7 +20,7 @@ fi
 #
 EXTENSIONS_ROOT="$HOME/.profiles"
 sourceExtension() {
-    local extension_file="$EXTENSIONS_ROOT/.bash_profile.$1"
+    local extension_file="$EXTENSIONS_ROOT/.profile.$1"
     if [ -f "$extension_file" ]; then
         echo "Loading $extension_file"
         . "$extension_file"

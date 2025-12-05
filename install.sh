@@ -6,4 +6,4 @@ mkdir -p ~/.bash
 cp ./.zshrc ~/.zshrc
 cp ./.bashrc ~/.bashrc
 cp ./.profile ~/.profile
-cp ./.profiles/.bash_profile.* ~/.profiles
+cp ./.profiles/.profile.* ~/.profiles

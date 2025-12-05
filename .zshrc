@@ -9,8 +9,8 @@ autoload -Uz compinit
 compinit -C
 
 #
-#   source .bash_profile
+#   source .profile
 #
-if [ -f ~/.bash_profile ]; then
-    . ~/.bash_profile
+if [ -f ~/.profile ]; then
+    . ~/.profile
 fi

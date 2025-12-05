@@ -1,7 +1,7 @@
 echo "Loading .bashrc"
 
 #
-#   source .bash_profile
+#   source .profile
 #
 if [ -f ~/.profile ]; then
     . ~/.profile

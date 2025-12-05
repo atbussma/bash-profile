@@ -1,0 +1,73 @@
+#
+#	Git completion for bash & zsh
+#		- loaded conditionally
+#
+
+# Detect shell
+is_bash=false
+is_zsh=false
+[ -n "$BASH_VERSION" ] && is_bash=true
+[ -n "$ZSH_VERSION" ] && is_zsh=true
+
+# Common install paths (adjust/add if needed)
+GIT_COMPLETION_BASH_PATHS="
+  /opt/homebrew/etc/bash_completion.d/git
+  /opt/homebrew/etc/bash_completion.d/git-completion.bash
+  /usr/share/bash-completion/completions/git
+  /usr/share/bash-completion/git
+  /etc/bash_completion.d/git
+  $HOME/.bash_completion.d/git
+"
+
+GIT_COMPLETION_ZSH_PATHS="
+  /opt/homebrew/share/zsh/site-functions/git-completion.zsh
+  /usr/local/share/zsh/site-functions/git-completion.zsh
+  /usr/share/zsh/site-functions/git-completion.zsh
+  $HOME/.zsh/completions/git-completion.zsh
+"
+
+# Helper: source the first readable file from a whitespace-separated list
+_source_first_readable_list() {
+  for f in $1; do
+    if [ -r "$f" ]; then
+      # shellcheck disable=SC1090
+      . "$f"
+      return 0
+    fi
+  done
+  return 1
+}
+
+if $is_bash; then
+  # Prefer loading bash-completion framework if it exists (helps with env & options)
+  if [ -r /opt/homebrew/etc/profile.d/bash_completion.sh ]; then
+    . /opt/homebrew/etc/profile.d/bash_completion.sh
+  elif [ -r /etc/profile.d/bash_completion.sh ]; then
+    . /etc/profile.d/bash_completion.sh
+  elif [ -r /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  fi
+
+  # If Git completion isn’t loaded yet, source explicit Git completion script
+  if ! declare -F __git_complete >/dev/null 2>&1; then
+    _source_first_readable_list "$GIT_COMPLETION_BASH_PATHS"
+  fi
+
+elif $is_zsh; then
+  # Assumes that zsh completions are initialized
+
+  # If you keep personal completions, include them in $fpath (optional)
+  if [ -d "$HOME/.zsh/completions" ]; then
+    fpath=("$HOME/.zsh/completions" $fpath)
+  fi
+
+  # Source zsh-specific Git completion if present; fallback to Bash script if needed
+  if ! _source_first_readable_list "$GIT_COMPLETION_ZSH_PATHS"; then
+    # Fallback (non-ideal but works on some systems that only ship bash script)
+    _source_first_readable_list "$GIT_COMPLETION_BASH_PATHS" >/dev/null 2>&1 || true
+  fi
+fi
+
+# Cleanup
+unset is_bash is_zsh GIT_COMPLETION_BASH_PATHS GIT_COMPLETION_ZSH_PATHS
+unset -f _source_first_readable_list
